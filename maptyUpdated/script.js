@@ -196,16 +196,29 @@ class App {
         }, 1000);
     }
     _toggleElevationField() {
-        inputElevation
+        inputElevation.closest('form__row').classList.add('form__row--hidden');
+        inputCadence.closest('.form__row').classList.add('form__row--hidden');
+        inputCadenceJogging
             .closest('.form__row')
-            .classList.toggle('form__row--hidden');
-        inputCadence
-            .closest('.form__row')
-            .classList.toggle('form__row--hidden');
+            .classList.add('form__row--hidden');
 
-        // inputCadenceJogging
-        //     .closest('.form__row')
-        //     .classList.toggle('form__row--hidden');
+        switch (inputType.value) {
+            case 'running':
+                inputCadence
+                    .closest('.form__row')
+                    .classList.remove('form__row--hidden');
+                break;
+            case 'cycling':
+                inputElevation
+                    .closest('.form__row')
+                    .classList.remove('form__row--hidden');
+                break;
+            case 'jogging':
+                inputCadenceJogging
+                    .closest('.form__row')
+                    .classList.remove('form__row--hidden');
+                break;
+        }
     }
 
     _getWorkouts() {
@@ -250,7 +263,7 @@ Cannot have any negative values, including 0!`);
         }
 
         if (type === 'jogging') {
-            const cadence = +inputCadenceJogging.value; // "+" is like Number() when put in front of the variable
+            const cadence = +inputCadence.value; // "+" is like Number() when put in front of the variable
             if (
                 !validInput(distance, duration, cadence) ||
                 !allPositive(distance, duration, cadence)
